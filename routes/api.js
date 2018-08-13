@@ -9,5 +9,6 @@ let apiRouter = new Router({
 apiRouter.use(mdwAddHeaderJson);
 
 apiRouter.get('/user', async ctx => { await new userCtrl(ctx).userInfo() });
+apiRouter.post('/user', async ctx => { await new userCtrl(ctx).insertUser() });
 
 module.exports = apiRouter;

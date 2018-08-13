@@ -67,7 +67,7 @@ const FuncValidate = {
     }
 };
 
-export class MyErrors {
+class MyErrors {
     constructor(errors) {
         this.errors = errors || {};
     }
@@ -96,24 +96,24 @@ export class MyErrors {
     }
 }
 
-export const MyValidate = (values, arrCheck, arrMessage) => {
+const MyValidate = (values, arrCheck, arrMessage) => {
     let errors = {};
     let listFunc = [];
     let tmpFuncName = '';
-    underscore.each(values, (value, key) => {
-        if (typeof arrCheck[key] != 'undefined') {
-            listFunc = arrCheck[key].split('|');
-            underscore.each(listFunc, (strFuncParams) => {
-                tmpFuncName = strFuncParams.split(':')[0];
-                if (!FuncValidate.execValidate(value, strFuncParams)) {//neu gia tri ko hop le
-                    if (!errors[key]) {
-                        errors[key] = arrMessage[key + '.' + tmpFuncName] || '';
-                    }
+    let tmpValue = '';
+    underscore.each(arrCheck, (cond, key) => {
+        listFunc = cond.split('|');
+        tmpValue = values[key] || '';
+        underscore.each(listFunc, (strFuncParams) => {
+            tmpFuncName = strFuncParams.split(':')[0];
+            if (!FuncValidate.execValidate(tmpValue, strFuncParams)) {//neu gia tri ko hop le
+                if (!errors[key]) {
+                    errors[key] = arrMessage[key + '.' + tmpFuncName] || '';
                 }
-            });
-        }
+            }
+        });
     });
-
     return new MyErrors(errors);
 }
 
+module.exports = MyValidate;

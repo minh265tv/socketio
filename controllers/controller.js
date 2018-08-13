@@ -1,6 +1,21 @@
 const db = require('../models');
+const validate = require('../libs/MyValidate');
+const myFunc = require('../libs/myFunc');
+
 module.exports = class controller{
-    constructor(){
+    constructor(ctx){
         this.model = db;
+        this.validate = validate;
+        this.ctx = ctx;
+        this.myFunc = myFunc;
+    }
+
+    response(data, status, header){
+        data = data || {};
+        status = status || 200;
+        header = header || {};
+
+        this.ctx.body = data;
+        this.ctx.status = status;
     }
 }

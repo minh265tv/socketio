@@ -1,24 +1,11 @@
 const myFunc = require('./libs/myFunc');
-const crypto = require("crypto");
-const fs = require("fs");
+const cliFunc = require('./cli/index');
+global.basePath = __dirname;
 
-const cliFunc = {
-    "key:generate": () => {
-        crypto.randomBytes(48, (err, buffer) => {
-            let content = require("./config/app.json");
-            content.appKey = buffer.toString('hex');
-            fs.writeFileSync("./config/app.json", JSON.stringify(content));
-        });
-    },
-    "port:config": (port) => {
-        let content = require("./config/app.json");
-        content.port = port;
-        fs.writeFileSync("./config/app.json", JSON.stringify(content));
-    }
-}
 
 let func = '';
 let params = [];
+
 process.argv.forEach((val, index) => {
     if (index == 2) {
         func = val;
@@ -28,6 +15,14 @@ process.argv.forEach((val, index) => {
     }
 });
 
+
+if(!func){
+    var listFunc = Object.keys(cliFunc);
+    console.log(listFunc.join("\n"));
+    return false;
+}
+
 if (!myFunc.isEmpty(cliFunc[func])) {
     cliFunc[func](...params);
+    return false;
 } 
