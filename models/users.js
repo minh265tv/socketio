@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     var Op = sequelize.Op;
     var users = sequelize.define('users', {
         account: DataTypes.STRING,
+        password: DataTypes.STRING,
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         phone: DataTypes.STRING,

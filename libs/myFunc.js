@@ -1,5 +1,7 @@
 const crypto = require("crypto");
 const appConfig = require("../config/app.json");
+const replaceAll = require('replaceall');
+
 module.exports = {
     isEmpty: (val) => {
         if (!val)
@@ -23,5 +25,8 @@ module.exports = {
     },
     makehash: (val) => {
         return crypto.createHmac('sha256', appConfig.appKey).update(val).digest('hex');
+    },
+    replace: (str, find, replace) => {
+        return replaceAll(find, replace, str);
     }
 };

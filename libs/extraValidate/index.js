@@ -13,4 +13,4 @@ fs.readdirSync(__dirname).filter(file => {
     extraValidateFunc = lodash.merge(extraValidateFunc, validateFunc);
 });
 
-module.exports = cliFunc;
+module.exports = extraValidateFunc;

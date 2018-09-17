@@ -1,5 +1,5 @@
 const db = require('../models');
-const validate = require('../libs/MyValidate');
+const validate =  require('../libs/MyValidate');
 const myFunc = require('../libs/myFunc');
 
 module.exports = class controller{
@@ -9,7 +9,7 @@ module.exports = class controller{
         this.ctx = ctx;
         this.myFunc = myFunc;
     }
-
+    
     response(data, status, header){
         data = data || {};
         status = status || 200;
@@ -17,5 +17,14 @@ module.exports = class controller{
 
         this.ctx.body = data;
         this.ctx.status = status;
+    }
+
+    getBody(){
+        return this.ctx.request.body;
+    }
+
+    getInput(key, defaultVal){
+        defaultVal = defaultVal || '';
+        return this.ctx.request.body[key] || defaultVal;
     }
 }

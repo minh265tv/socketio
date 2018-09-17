@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const myFunc = require('../libs/myFunc');
 
 const makeFunc = {
     'make:controller': (fileName) => {
@@ -12,7 +13,7 @@ const makeFunc = {
         }
         else{
             //make directory
-            if(!fs.existsSync(filePath)) {
+            if(!fs.existsSync(directory)) {
                 mkdirp(directory);
             }
 
@@ -28,6 +29,33 @@ const makeFunc = {
             
             return false;
         }
+    },
+    'make:model': (fileName) => {
+        let directory = path.join(basePath, 'models');
+        let filePath = path.join(directory, fileName + '.js');
+        if(fs.existsSync(filePath)) {
+            console.log('model exists ' + filePath);
+            return false;
+        }
+        else{
+            //make directory
+            if(!fs.existsSync(directory)) {
+                mkdirp(directory);
+            }
+
+            //make controller file
+            try {
+                let content = fs.readFileSync(path.join(basePath, 'cli', 'clone', 'model.js'), { encoding: 'utf8' });
+                content = myFunc.replace(content, 'table', fileName);
+                fs.writeFileSync(filePath, content);
+                console.log('make model ' + filePath + ' success');
+            } catch (error) {
+                console.log(error);
+                console.log('make model fail, try again');
+            }
+            
+            return false;
+        } 
     },
     'make:validate': (fileName) => {
         let directory = path.join(basePath, 'libs', 'extraValidate');

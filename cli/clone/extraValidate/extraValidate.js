@@ -1,5 +1,5 @@
 module.exports = {
-    testFunc: () => {
+    testFunc: async () => {
         
     }
 }
