@@ -22,7 +22,7 @@ app
     .use(apiRoute.routes())
     .use(apiRoute.allowedMethods());;
 
-socket.login();
+socket.login(); 
 
 server.on('close', function() {
   fs.write(__dirname,'/src/socket/DB.json',[]);
